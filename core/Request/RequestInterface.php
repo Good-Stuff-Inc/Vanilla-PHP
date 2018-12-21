@@ -16,6 +16,7 @@ interface RequestInterface
      *
      * @param string      $key
      * @param string|null $default
+     *
      * @return mixed|null
      */
     public function get($key, $default = null);

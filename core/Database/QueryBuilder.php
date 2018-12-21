@@ -45,23 +45,25 @@ abstract class QueryBuilder
      * Create a new QueryBuilder instance.
      *
      * @param PDO $pdo
+     *
      * @throws \ReflectionException
      */
     public function __construct($pdo)
     {
-        $this->pdo       = $pdo;
-        $this->tableName = $this->tableName ?? strtolower((new \ReflectionClass($this))->getShortName()) . 's';
+        $this->pdo = $pdo;
+        $this->tableName = $this->tableName ?? strtolower((new \ReflectionClass($this))->getShortName()).'s';
     }
 
     /**
      * Adding set of conditions as a string.
      *
      * @param array $conditions
+     *
      * @return $this
      */
     public function where($conditions)
     {
-        $this->where = " where " . implode(', ', $conditions);
+        $this->where = ' where '.implode(', ', $conditions);
 
         return $this;
     }
@@ -71,6 +73,7 @@ abstract class QueryBuilder
      *
      * @param string $column
      * @param string $order
+     *
      * @return $this
      */
     public function orderBy($column, $order = 'ASC')
@@ -85,6 +88,7 @@ abstract class QueryBuilder
      *
      * @param int $start
      * @param int $end
+     *
      * @return $this
      */
     public function limit($start, $end)
@@ -98,12 +102,13 @@ abstract class QueryBuilder
      * Select all records from a database table.
      *
      * @param array $columns
+     *
      * @return array
      */
     public function selectAll($columns = [])
     {
-        $fields    = $columns ? implode(', ', $columns) : '*';
-        $sql       = "select $fields from {$this->tableName}";
+        $fields = $columns ? implode(', ', $columns) : '*';
+        $sql = "select $fields from {$this->tableName}";
         $statement = $this->executeStatement($sql);
 
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -113,12 +118,13 @@ abstract class QueryBuilder
      * Select all records from a database table.
      *
      * @param array $columns
+     *
      * @return array
      */
     public function select($columns = [])
     {
-        $fields    = $columns ? implode(', ', $columns) : '*';
-        $sql       = $this->attachClauses("select $fields from {$this->tableName}");
+        $fields = $columns ? implode(', ', $columns) : '*';
+        $sql = $this->attachClauses("select $fields from {$this->tableName}");
         $statement = $this->executeStatement($sql);
 
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -128,13 +134,14 @@ abstract class QueryBuilder
      * Select single record from a database table.
      *
      * @param array $columns
+     *
      * @return array
      */
     public function selectOne($columns = [])
     {
         $this->limit(0, 1);
-        $fields    = $columns ? implode(', ', $columns) : '*';
-        $sql       = $this->attachClauses("select {$fields} from {$this->tableName}");
+        $fields = $columns ? implode(', ', $columns) : '*';
+        $sql = $this->attachClauses("select {$fields} from {$this->tableName}");
         $statement = $this->executeStatement($sql);
 
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -143,7 +150,8 @@ abstract class QueryBuilder
     /**
      * Insert a record into a table.
      *
-     * @param  array $parameters
+     * @param array $parameters
+     *
      * @return bool|\PDOStatement
      */
     public function insert($parameters)
@@ -152,8 +160,9 @@ abstract class QueryBuilder
             'insert into %s (%s) values (%s)',
             $this->tableName,
             implode(', ', array_keys($parameters)),
-            ':' . implode(', :', array_keys($parameters))
+            ':'.implode(', :', array_keys($parameters))
         );
+
         try {
             $this->executeStatement($sql, $parameters);
         } catch (\Exception $exception) {
@@ -165,6 +174,7 @@ abstract class QueryBuilder
      * Update specific record(s).
      *
      * @param array $parameters
+     *
      * @return bool|\PDOStatement
      */
     public function update($parameters)
@@ -172,7 +182,7 @@ abstract class QueryBuilder
         $values = array_map(function ($key, $value) {
             return "{$key} = {$value}";
         }, array_keys($parameters), $parameters);
-        $sql    = $this->attachClauses(sprintf('update %s set %s', $this->tableName, implode(', ', $values)));
+        $sql = $this->attachClauses(sprintf('update %s set %s', $this->tableName, implode(', ', $values)));
 
         try {
             return $this->executeStatement($sql);
@@ -189,6 +199,7 @@ abstract class QueryBuilder
     public function delete()
     {
         $sql = $this->attachClauses("delete from {$this->tableName}");
+
         try {
             return $this->executeStatement($sql);
         } catch (\Exception $exception) {
@@ -201,6 +212,7 @@ abstract class QueryBuilder
      *
      * @param string $sql
      * @param array  $parameters
+     *
      * @return bool|\PDOStatement
      */
     protected function executeStatement($sql, $parameters = [])
@@ -215,6 +227,7 @@ abstract class QueryBuilder
      * Attach the extra clauses to the query.
      *
      * @param string $sql
+     *
      * @return string
      */
     protected function attachClauses($sql)

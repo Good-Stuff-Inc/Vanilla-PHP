@@ -8,6 +8,7 @@ interface RouterInterface
      * Load a user's routes file.
      *
      * @param string $file
+     *
      * @return RouterInterface
      */
     public function load($file);
@@ -33,6 +34,7 @@ interface RouterInterface
      *
      * @param string $uri
      * @param string $requestType
+     *
      * @return mixed
      */
     public function direct($uri, $requestType);

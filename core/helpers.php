@@ -3,8 +3,9 @@
 /**
  * Require a view.
  *
- * @param  string $name
- * @param  array  $data
+ * @param string $name
+ * @param array  $data
+ *
  * @return mixed
  */
 function view($name, $data = [])
@@ -17,7 +18,7 @@ function view($name, $data = [])
 /**
  * Redirect to a new page.
  *
- * @param  string $path
+ * @param string $path
  */
 function redirect($path)
 {

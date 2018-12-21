@@ -1,7 +1,7 @@
 <?php
 
 require 'vendor/autoload.php';
-(new \Dotenv\Dotenv(__DIR__ . '/../'))->load();
+(new \Dotenv\Dotenv(__DIR__.'/../'))->load();
 
 use Core\App;
 use Core\Database\Connection;
