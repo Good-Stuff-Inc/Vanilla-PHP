@@ -10,19 +10,20 @@ class Router implements RouterInterface
      * @var array
      */
     public $routes = [
-        'GET' => [],
-        'POST' => []
+        'GET'  => [],
+        'POST' => [],
     ];
 
     /**
      * Load a user's routes file.
      *
      * @param string $file
+     *
      * @return Router
      */
     public function load($file)
     {
-        $router = new static;
+        $router = new static();
 
         require $file;
 
@@ -56,6 +57,7 @@ class Router implements RouterInterface
      *
      * @param string $uri
      * @param string $requestType
+     *
      * @return mixed
      */
     public function direct($uri, $requestType)
@@ -74,14 +76,15 @@ class Router implements RouterInterface
      *
      * @param string $controller
      * @param string $action
+     *
      * @return mixed
      */
     protected function callAction($controller, $action)
     {
         $controller = "App\\Controllers\\{$controller}";
-        $controller = new $controller;
+        $controller = new $controller();
 
-        if (! method_exists($controller, $action)) {
+        if (!method_exists($controller, $action)) {
             throw new Exception(
                 "{$controller} does not respond to the {$action} action."
             );

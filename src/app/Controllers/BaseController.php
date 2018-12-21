@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use Core\App;
 
-Abstract class BaseController
+abstract class BaseController
 {
     /**
      * @var App
@@ -23,6 +23,7 @@ Abstract class BaseController
      * Return json.
      *
      * @param array $data
+     *
      * @return false|string
      */
     public function jsonResponse($data)
