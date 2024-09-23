@@ -1,10 +1,10 @@
 {
-  "name": "tawba/Vanilla-PHP",
+  "name": "tawba/vanilla-php",
   "description": "Simple Vanilla PHP Project",
   "keywords": [
-    "Vanilla",
-    "PHP",
-    "Quick start"
+    "vanilla",
+    "php",
+    "quick start"
   ],
   "license": "MIT",
   "type": "project",
