@@ -2,6 +2,9 @@ name: Psalm Security Scan
 
 on: workflow_dispatch
 
+permissions:
+  security-events: write
+
 jobs:
   psalm-security-scan:
     name: Psalm
